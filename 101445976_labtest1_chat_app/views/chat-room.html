@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Room</title>
+    <script src="https://cdn.socket.io/4.0.1/socket.io.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(45deg, #6db3f2, #1e62d0);
+            color: #fff;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            display: flex;
+            max-width: 900px;
+            width: 100%;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-right: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .chat-container {
+            flex-grow: 1;
+        }
+        #chat {
+            height: 300px;
+            overflow-y: scroll;
+            border: 1px solid #ccc;
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            color: black;
+        }
+        #chat p {
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+            margin: 0;
+        }
+        .btn-primary {
+            border-radius: 25px;
+            padding: 12px;
+            font-size: 16px;
+            background-color: #007bff;
+            border: none;
+            width: 100%;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+        .btn-danger {
+            border-radius: 25px;
+            padding: 12px;
+            font-size: 16px;
+            background-color: #dc3545;
+            border: none;
+            width: 100%;
+        }
+        #welcomeMessage {
+    color: black; /* Set text color to black */
+}
+
+        .btn-danger:hover {
+            background-color: #a71d2a;
+        }
+        #roomName, h5 {
+            color: black !important;
+        }
+        #typingIndicator {
+            color: #aaa;
+            font-size: 14px;
+        }
+    </style>
+    <script>
+        const socket = io();
+        let room, username;
+
+        window.onload = () => {
+            room = window.location.pathname.split('/').pop();
+            username = localStorage.getItem('username') || 'Guest';
+
+            document.getElementById('roomName').textContent = `Room: ${room}`;
+            document.getElementById('welcomeMessage').textContent = `Welcome to the ${room}!`;
+
+            socket.emit('joinRoom', { username, room });
+        };
+
+        socket.on('message', (msg) => {
+            const chat = document.getElementById('chat');
+            const messageElement = document.createElement('p');
+            messageElement.textContent = msg;
+            chat.appendChild(messageElement);
+            chat.scrollTop = chat.scrollHeight;
+        });
+
+        socket.on('roomUsers', ({ room, users }) => {
+            const membersList = document.getElementById('membersList');
+            membersList.innerHTML = users.map(user => `<li>${user.username}</li>`).join('');
+        });
+
+        socket.on('typing', (username) => {
+            const typingIndicator = document.getElementById('typingIndicator');
+            typingIndicator.textContent = `${username} is typing...`;
+            setTimeout(() => {
+                typingIndicator.textContent = '';
+            }, 3000);
+        });
+
+        function sendMessage() {
+            const message = document.getElementById('message').value;
+            if (message.trim() !== '') {
+                // Emit the message to the server
+                socket.emit('chatMessage', { username, room, message });
+
+                // Display the message in the chat
+                const chat = document.getElementById('chat');
+                const messageElement = document.createElement('p');
+                messageElement.textContent = `You: ${message}`;
+                chat.appendChild(messageElement);
+                chat.scrollTop = chat.scrollHeight;
+
+                // Clear the input field
+                document.getElementById('message').value = '';
+            }
+        }
+
+        function leaveGroup() {
+            socket.emit('leaveRoom', { username, room });
+            window.location.href = '/chat'; // Redirect to home or lobby page
+        }
+
+        function typing() {
+            socket.emit('typing', { username, room });
+        }
+
+        document.getElementById('message').addEventListener('input', typing);
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div>
+                <h4 id="roomName"></h4>
+                <h5>Members</h5>
+                <ul id="membersList" class="list-unstyled"></ul>
+                <div id="typingIndicator"></div>
+            </div> 
+            <button onclick="leaveGroup()" class="btn btn-danger mt-3">Leave Group</button>
+        </div>
+        <div class="chat-container">
+            <h2 id="welcomeMessage"></h2>
+            <div id="chat"></div>
+            <input id="message" type="text" placeholder="Type your message..." class="form-control" />
+            <button onclick="sendMessage()" class="btn btn-primary mt-3">Send</button>
+        </div>
+    </div>
+</body>
+</html>

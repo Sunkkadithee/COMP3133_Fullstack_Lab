@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#signupForm').on('submit', async function(e) {
+                e.preventDefault();
+                const username = $('#username').val();
+                const firstname = $('#firstname').val();
+                const lastname = $('#lastname').val();
+                const password = $('#password').val();
+
+                const response = await fetch('/api/auth/signup', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, firstname, lastname, password })
+                });
+                const data = await response.json();
+                if (response.ok) {
+                    alert('Signup successful!');
+                    window.location.href = '/chat'; // Redirect to welcome page after successful signup
+                } else {
+                    alert(data.message);
+                }
+            });
+        });
+    </script>
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Arial', sans-serif;
+        }
+        .signup-container {
+            max-width: 450px;
+            margin: 100px auto;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .signup-container h2 {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        .form-control {
+            border-radius: 10px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        .btn-primary {
+            width: 100%;
+            padding: 12px;
+            border-radius: 10px;
+            font-size: 16px;
+        }
+        .btn-primary:hover {
+            background-color: #0069d9;
+        }
+        .signup-container a {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+        }
+        .signup-container a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="signup-container">
+            <h2>Signup</h2>
+            <form id="signupForm">
+                <div class="mb-3">
+                    <input type="text" id="username" class="form-control" placeholder="Username" required>
+                </div>
+                <div class="mb-3">
+                    <input type="text" id="firstname" class="form-control" placeholder="First Name" required>
+                </div>
+                <div class="mb-3">
+                    <input type="text" id="lastname" class="form-control" placeholder="Last Name" required>
+                </div>
+                <div class="mb-3">
+                    <input type="password" id="password" class="form-control" placeholder="Password" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Register</button>
+            </form>
+            <a href="/login">Already have an account? Login here</a>
+        </div>
+    </div>
+</body>
+</html>
