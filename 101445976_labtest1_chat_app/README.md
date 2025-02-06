@@ -12,7 +12,7 @@ The welcome page contains two buttons:
 - **Login**
 - **Sign Up**
 
-![Screenshot 1](/sceenshots/welcompage.png)
+![Screenshot 1](./screenshots/welcompage.png)
 
 ---
 
@@ -20,15 +20,15 @@ The welcome page contains two buttons:
 
 Users can sign up by entering their **Username**, **First Name**, **Last Name**, and **Password**. After filling in the required fields, click **Register**. There is also a link at the bottom that redirects users back to the login page if they already have an account.
 
-![Signup](/sceenshots/signup.png)
+![Signup](./screenshots/signup.png)
 
 Once the registration is successful, a notification will pop up confirming the account creation.
 
-![Signup2](/sceenshots/signuppopup.png)
+![Signup2](./screenshots/signuppopup.png)
 
 Here’s the database showing the newly created user:
 
-![User database](/sceenshots/databaseuser.png)
+![User database](./screenshots/databaseuser.png)
 
 ---
 
@@ -36,7 +36,7 @@ Here’s the database showing the newly created user:
 
 Users can log in by entering their **Username** and **Password**.
 
-![Login](/sceenshots/login.png)
+![Login](./screenshots/login.png)
 
 ---
 
@@ -47,13 +47,13 @@ After logging in, users are directed to the homepage, where they can join group 
 2. **Tech**
 3. **Gaming**
 
-![Join chat page](/sceenshots/joinchat.png)
+![Join chat page](./screenshots/joinchat.png)
 
-![Option group Chat](/sceenshots/optionchat.png)
+![Option group Chat](./screenshots/optionchat.png)
 
 Here’s the database showing the available rooms:
 
-![Room database](/sceenshots/roomsdatabase.png)
+![Room database](./screenshots/roomsdatabase.png)
 
 ---
 
@@ -63,21 +63,21 @@ In the chat room, users can see the room name and the members currently joined. 
 
 Here are some screenshots of the group messages:
 
-![Group message](/sceenshots/Groupmessage1'.png)
+![Group message](./screenshots/Groupmessage1'.png)
 
-![Group message](/sceenshots/Groupmessage2.png)
+![Group message](./screenshots/Groupmessage2.png)
 
-![Group message](/sceenshots/groupmessage3.png)
+![Group message](./screenshots/groupmessage3.png)
 
 The database stores the **Username**, **Room**, **Message**, and **Timestamp** of each chat message.
 
-![Group message](/sceenshots/chatdatabaseinfo.png)
+![Group message](./screenshots/chatdatabaseinfo.png)
 
-![Group message](/sceenshots/groupmessage4.png)
+![Group message](./screenshots/groupmessage4.png)
 
-![Group message](/sceenshots/groupmessage4.png)
+![Group message](./screenshots/groupmessage4.png)
 
-![Group message](/sceenshots/chatdatabaseinfo2.png)
+![Group message](./screenshots/chatdatabaseinfo2.png)
 
 ---
 
@@ -85,7 +85,7 @@ The database stores the **Username**, **Room**, **Message**, and **Timestamp** o
 
 Users have the option to leave a group. When you click **Leave Group**, you will be redirected back to the Join Room page.
 
-![Leave group](/sceenshots/leavegroup.png)
+![Leave group](./screenshots/leavegroup.png)
 
 ---
 
@@ -93,9 +93,9 @@ Users have the option to leave a group. When you click **Leave Group**, you will
 
 In the Join Room page, there is a **Log Out** option for users. Clicking this will log the user out and take them back to the Welcome page.
 
-![Log out](/sceenshots/logout1.png)
+![Log out](./screenshots/logout1.png)
 
-![Log out - Return to Home](/sceenshots/logoutgobackhomepage.png)
+![Log out - Return to Home](./screenshots/logoutgobackhomepage.png)
 
 ---
 
